@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置接口IUserDao的映射文件-->
+<!-- namespace：接口IAccount的全限定类名-->
+<mapper namespace="com.itheima.dao.IAccountDao">
+
+    <!-- 配置对应关系，以实现将account表和user表中的数据全部封装到Account实体类中的效果 -->
+    <resultMap id="accountUserMap" type="account">
+        <!-- 封装account表的数据 -->
+        <id property="id" column="aid"></id>    <!-- aid为account表中id字段的别名，因为我们在同时查询account表和user表时，会查出来两个id字段，一个是account表的，一个是user表的，所以起别名用以区分-->
+        <result property="uid" column="uid"></result>
+        <result property="money" column="money"></result>
+        <!-- 建立一对一的关系映射，以实现封装user表的数据 -->
+        <association property="user" javaType="com.itheima.domain.User">  <!-- user为Account实体类中引用的user对象  javaType属性用于指定要将user表中的数据封装到哪里，这里我们可以写全类名com.itheima.domain.User 也可以写别名user -->
+            <id property="id" column="id"></id>
+            <result property="username" column="username"></result>
+            <result property="address" column="address"></result>
+            <result property="sex" column="sex"></result>
+            <result property="birthday" column="birthday"></result>
+        </association>
+    </resultMap>
+
+    <!-- 查询所有账户信息，和账户所属的用户信息，并封装到Account中 -->
+    <select id="findAccountAndUser" resultMap="accountUserMap">
+        select u.*, a.id as aid, a.uid, a.money from user u, account a where u.id = a.uid;
+    </select>
+
+    <!-- 查询所有账户信息 -->
+    <select id="findAll" resultType="account">
+        select * from account
+    </select>
+
+    <!-- 查询所有账户信息，同时还要获取账户所属用户的username和address -->
+    <select id="findAccountUser" resultType="accountUser">
+        select a.*, u.username, u.address from user u, account a where u.id = a.uid;
+    </select>
+
+
+
+
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置接口IUserDao的映射文件-->
+<!-- namespace：接口IUserDao的全限定类名-->
+<mapper namespace="com.itheima.dao.IUserDao">
+
+    <!-- 配置实体类中的属性名和表中的字段名的对应关系 -->
+    <resultMap id="userMap" type="com.itheima.domain.User">
+        <!-- 主键字段的对应关系 -->
+        <id property="userId" column="id"></id> <!-- 实体类的属性userId和表中的字段名id对应-->
+        <!-- 非主键字段的对应关系 -->
+        <result property="userName" column="username"></result>
+        <result property="userAddress" column="address"></result>
+        <result property="userSex" column="sex"></result>
+        <result property="userBirthday" column="birthday"></result>
+    </resultMap>
+
+    <!-- 通过写别名的方式，解决实体类中的属性名和表中的字段名不一致的问题 -->
+    <!-- id：需要执行接口IUserDao中的方法名称 -->   <!-- resultType：用于封装查询结果的实体类的全限定类名 -->
+    <!--<select id="findAll" resultType="com.itheima.domain.User">
+        select id as userId, username as userName, address as userAddress, sex as userSex, birthday as userBirthday from user;
+    </select>-->
+
+    <!-- 使用resultMap映射，解决实体类中的属性名和表中的字段名不一致的问题 -->
+    <select id="findAll" resultMap="userMap">
+        select * from user;
+    </select>
+
+    <!-- parameterMap：方法中的参数类型-->
+    <insert id="saveUser" parameterType="com.itheima.domain.User">
+        <!-- 在执行插入语句之后，获取这条插入语句的id -->    <!-- keyProperty：实体类中的属性id    keyColumn：表中的字段id   resultType：返回值类型为整型     order：在插入语句执行完成后，再执行 -->
+        <selectKey keyProperty="userId" keyColumn="id" resultType="int" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+        <!-- 从User中取出对应的属性，作为values的值 -->
+        insert into user(username, address, sex, birthday) values(#{userName}, #{userAddress}, #{userSex},#{userBirthday});
+    </insert>
+
+    <update id="updateUser" parameterType="UsEr">
+        update user set address = #{userAddress}, sex = #{userSex} where id = #{userId};
+    </update>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        <!-- 因为参数类型是整型，所以只有一个参数，那么在取值时，参数名称可以任意写，例如：suibian_id -->
+        delete from user where id = #{suibian_id};
+    </delete>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="userMap">
+        select * from user where id = #{id};
+    </select>
+
+    <select id="findByUsername" parameterType="string" resultMap="userMap">
+        <!-- select * from user where username like '%${value}%'; -->
+        select * from user where username like #{username};
+    </select>
+
+    <select id="findTotal" resultType="int">
+        select count(*) from user;
+    </select>
+
+    <!-- 根据QueryVo（就是一个类，不过类里面有其它类的对象）中的查询条件，查询用户信息 -->
+    <select id="findUserByVo" parameterType="com.itheima.domain.QueryVo" resultMap="userMap">
+                                              <!-- 获取QueryVo中的属性user对象，再获取user对象的属性username作为参数 -->
+        select * from user where username like #{user.userName};
+    </select>
+</mapper>

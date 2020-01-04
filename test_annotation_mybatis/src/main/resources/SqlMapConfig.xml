@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--引入外部配置文件-->
+    <properties resource="jdbcConfig.properties"></properties>
+    <!--配置实体类的别名-->
+    <typeAliases>
+        <!--package用于执行需要配置别名的包，当指定后，该包下的实体类都会注册别名，并且类名就是别名，不区分大小写-->
+        <package name="com.itcast.domain"></package>
+    </typeAliases>
+
+    <!--配置数据库环境--> <!--默认环境为mysql，后续可能会有oracle、DB2等数据库的环境-->
+    <environments default="mysql">
+        <!--配置mysql的数据库环境-->
+        <environment id="mysql">
+            <!--配置事务-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--配置数据源（连接池）-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"></property>
+                <property name="url" value="${jdbc.url}"></property>
+                <property name="username" value="${jdbc.username}"></property>
+                <property name="password" value="${jdbc.password}"></property>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--指定带有注解的dao接口的所在位置-->
+    <mappers>
+        <!--package用于指定dao接口所在的包路径-->
+        <package name="com.itcast.dao"></package>
+    </mappers>
+</configuration>

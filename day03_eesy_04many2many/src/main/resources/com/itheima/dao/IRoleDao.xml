@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.IRoleDao">
+
+    <!-- 配置对应关系，以实现将role表和user表中的数据全部封装到Role实体类中的效果 -->
+    <resultMap id="roleMap" type="role">
+        <!-- 封装role表的数据-->
+        <id property="roleId" column="ID"></id>
+        <result property="roleName" column="ROLE_NAME"></result>
+        <result property="roleDesc" column="ROLE_DESC"></result>
+        <!-- 封装user表的数据-->
+        <collection property="users" ofType="com.itheima.domain.User">  <!-- users为Role实体类中引用的User对象的集合   ofType属性用于指定要将user表中的数据封装到哪里，这里我们可以写全类名com.itheima.domain.User 也可以写别名user -->
+            <id property="id" column="uid"></id>    <!-- uid为user表中id字段的别名，因为我们在同时查询role表和user表时，会查出来两个id字段，一个是role表的，一个是user表的，所以起别名用以区分-->
+            <result property="username" column="username"></result>
+            <result property="address" column="address"></result>
+            <result property="sex" column="sex"></result>
+            <result property="birthday" column="birthday"></result>
+        </collection>
+    </resultMap>
+
+    <!-- 查询所有角色信息，以及所属的用户信息 -->
+    <select id="findAll" resultMap="roleMap">
+        select r.*, u.id as uid, u.username, u.birthday, u.sex, u.address from role r
+         left outer join user_role ur on r.id = ur.rid
+         left outer join user u on ur.uid = u.id
+    </select>
+
+
+</mapper>
