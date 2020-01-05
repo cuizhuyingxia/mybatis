@@ -25,8 +25,8 @@
 
     <!-- 指定带有注解的dao接口所在的位置 -->
     <mappers>
-        <!-- 如果这个包下有xml文件，那么就使用xml文件；如果有注解，那么就使用注解-->
-        <!-- 注意：该包下要么有xml文件，要么有注解，只能有其中一个，不能同时存在，否则会报错 -->
-        <mapper class="com.itheima.dao.IUserDao"></mapper>
+        <!-- 如果这个包下有xml文件，那么就使用xml文件；如果有带有注解的dao接口，那么就使用注解-->
+        <!-- 注意：该包下要么有xml文件，要么有带有注解的dao接口，只能有其中一个，不能同时存在，否则会报错 -->
+        <package name="com.itheima.dao"></package>
     </mappers>
 </configuration>

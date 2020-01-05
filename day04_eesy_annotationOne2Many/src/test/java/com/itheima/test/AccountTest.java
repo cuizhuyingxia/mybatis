@@ -53,11 +53,12 @@ public class AccountTest {
 	 */
 	@Test
 	public void testFindAll() {
-		List<Account> accounts = accountDao.findAll();
+		//使用延时加载后
+		List<Account> accounts = accountDao.findAll();//这条语句只会查询Account的信息，执行sql为：select * from account;
 		for (Account account : accounts) {
 			System.out.println("---------每个账户的信息-----------");
 			System.out.println(account);
-			System.out.println(account.getUser());
+			System.out.println(account.getUser());//当需要从Account中获取User信息时，才会去查询User的信息，此时才会执行sql：select * from user where id = ?;
 		}
 	}
 

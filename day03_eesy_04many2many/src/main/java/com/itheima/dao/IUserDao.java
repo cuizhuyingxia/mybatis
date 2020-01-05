@@ -1,8 +1,8 @@
 package com.itheima.dao;
 
-import com.itheima.domain.User;
+		import com.itheima.domain.User;
 
-import java.util.List;
+		import java.util.List;
 
 /**
  * @Author Lian Flower

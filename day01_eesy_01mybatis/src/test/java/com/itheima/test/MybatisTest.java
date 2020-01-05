@@ -28,7 +28,7 @@ public class MybatisTest {
 		// 2. 创建SqlSessionFactoryBuilder工厂对象
 		// 先创建SqlSessionFactoryBuilder对象
 		SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-		// 然后使用SqlSessionFactoryBuilder对象的build方法，创建SqlSessionFactoryBuilder工厂对象
+		// 然后使用SqlSessionFactoryBuilder对象的build方法，创建SqlSessionFactory工厂对象
 		SqlSessionFactory factory = builder.build(inputStream);
 		// 3. 使用工厂对象创建SqlSession对象。SqlSession对象可以用来操作数据库
 		SqlSession session = factory.openSession();

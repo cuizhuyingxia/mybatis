@@ -49,8 +49,8 @@
         select * from user where username like #{user.userName}
     </select>
 
-    <!-- 根据条件查询 if标签 -->
-    <!--<select id="findUserByCondition" parameterType="user" resultMap="userMap">
+    <!-- 根据条件查询 if标签
+    <select id="findUserByCondition" parameterType="user" resultMap="userMap">
         select * from user where 1=1
         <if test="userName != null">  &lt;!&ndash; 如果参数user对象中的属性userName不为空， &ndash;&gt;
           and username = #{userName}  &lt;!&ndash; 则取出userName的值作为查询条件&ndash;&gt;
@@ -78,7 +78,8 @@
         <!-- 使用sql标签中的sql语句片段 -->
         <include refid="defaultUser"/>
         <where>
-            <if test="ids != null and ids.size() > 0">
+            <if test="ids != null and ids.size() > 0">  <!-- 如果ids不为null -->
+                <!-- 遍历ids集合，取出每一个uid，依次放到sql语句中：and id in (uid, uid, uid) -->
                 <foreach collection="ids" open="and id in (" close=")" item="uid" separator=",">
                     #{uid}
                 </foreach>

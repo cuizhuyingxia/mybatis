@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 配置IUserDao的映射配置文件 -->
-<!-- namespace为IUserDao的全限定类名 -->
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!-- 配置IUserDao的映射配置文件 -->
+        <!-- namespace为IUserDao的全限定类名 -->
 <mapper namespace="com.itheima.dao.IUserDao">
-    <!-- 配置IUserDao中的方法findAll -->
-    <!-- id：sql语句的唯一标识符   resultType：将sql语句返回的结果封装到指定的实体类中 -->
-    <select id="findAll" resultType="com.itheima.domain.User">
-        /*添加调用findAll方法后，需要执行的sql语句*/
-        select * from user
-    </select>
+<!-- 配置IUserDao中的方法findAll -->
+<!-- id：sql语句的唯一标识符   resultType：将sql语句返回的结果封装到指定的实体类中 -->
+<select id="findAll" resultType="com.itheima.domain.User">
+    select * from user
+</select>
 </mapper>
